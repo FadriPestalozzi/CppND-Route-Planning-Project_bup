@@ -1,6 +1,14 @@
 # Homework Assignment
 
-Source code in folder src updated
+Deliverables: 
+- Source code in folder src updated
+- Alternative map zh.osm added
+- ./test passed
+- user input {10,10,90,90} results in a distance of 418.748 meters and generates the following path image. 
+
+<img src="zh.png" width="600" height="450" />
+
+
 
 
 # Route Planning Project
