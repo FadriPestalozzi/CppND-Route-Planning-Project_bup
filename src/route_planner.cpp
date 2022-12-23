@@ -46,13 +46,11 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
     // this->end_node = from current model, access *end_node
         // ROUTE_PLANNER_H --- RouteModel::Node *end_node;
         // dereference *node to evaluate distance(node value)
-    float H_current = node->distance(*(this->end_node));
+    float H_current = node->distance(*(this->end_node));  // alternative:    distance(*end_node)
     
     // cout << "H-value between current_node and end_node= " << H_current <<"\n";
     
     return H_current;
-    // alternative:
-    // return node -> distance(*end_node);
 }
 
 
@@ -99,8 +97,6 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 
             // g-value is sum of path distances
             neighbor_node->g_value = current_node->g_value + current_node->distance(*(neighbor_node));
-            // alternative
-            // neighbor_node->g_value = neighbor_node->distance(*neighbor_node->parent); // 
 
             // add neighbor_node to open_list of this *current_node
             this->open_list.push_back(neighbor_node);
@@ -156,8 +152,6 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     RouteModel::Node *iter_node = current_node;
 
     // iteratively follow the chain of node parents backwards until starting node reached
-    // alternative: 
-    // while(iter_node->parent != nullptr){
     while(iter_node != this->start_node){
     
         // For each node in the chain, add the distance from the node to its parent to the distance variable.
@@ -168,11 +162,6 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
         // next parent iteration node
         iter_node = iter_node->parent;
-
-        // // throw if start not reached --- no parent defined --- Node* parent = nullptr;
-        // if(iter_node->parent == nullptr){
-        //     std::cout << "Error, start not reached! \n";
-        // }
     }
 
     // add start_node
