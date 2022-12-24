@@ -6,23 +6,11 @@
 
 #IncludeRegexTransform: 
 
-../thirdparty/pugixml/src/pugiconfig.hpp
-
-../thirdparty/pugixml/src/pugixml.hpp
-pugiconfig.hpp
-../thirdparty/pugixml/src/pugiconfig.hpp
-stddef.h
--
-exception
--
-iterator
--
-iosfwd
--
-string
--
-
 /home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/main.cpp
+utility
+-
+limits
+-
 optional
 -
 fstream
@@ -42,22 +30,6 @@ render.h
 route_planner.h
 /home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/route_planner.h
 
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/model.cpp
-model.h
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/model.h
-pugixml.hpp
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/pugixml.hpp
-iostream
--
-string_view
--
-cmath
--
-algorithm
--
-assert.h
--
-
 /home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/model.h
 vector
 -
@@ -68,12 +40,6 @@ string
 cstddef
 -
 
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/render.cpp
-render.h
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/render.h
-iostream
--
-
 /home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/render.h
 unordered_map
 -
@@ -81,12 +47,6 @@ io2d.h
 -
 route_model.h
 /home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/route_model.h
-
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/route_model.cpp
-route_model.h
-/home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/route_model.h
-iostream
--
 
 /home/fadri/cpp/osm/CppND-Route-Planning-Project_bup/src/route_model.h
 limits

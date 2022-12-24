@@ -1,3 +1,5 @@
+#include <utility> // cin getUserInput
+#include <limits> // cin getUserInput
 #include <optional>
 #include <fstream>
 #include <iostream>
@@ -30,6 +32,32 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
     return std::move(contents);
 }
 
+// function to support modularity of user input prompts
+// keep asking until user input in valid boundary of 0-100 [%]
+float getUserInput(std::string userInputString){
+    float userInputValue=-1; // initialize invalid value to ensure user input
+    bool keepTrying;
+    do{
+        keepTrying = false; // assume valid user input
+        std::cout << "Enter the value of " << userInputString << " :\n";
+        std::cin >> userInputValue;
+
+        // if cin is of invalid type or out of range, keep trying
+        if (!std::cin || (userInputValue < 0.0) || (userInputValue > 100.0)){ 
+            keepTrying = true; // ask user for other input
+
+            std::cout << "Invalid input, please enter a number between 0 and 100 \n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            // ignore rest of current line, up to delimiter '\n'
+            // `numeric_limits<streamsize>::max()`sets maximum number of chars to ignore.
+            // with upper stream size limit, there is no limit to the number of characters cin is to ignore.            
+        } 
+    } while(keepTrying); // loop until valid input received
+    return userInputValue;
+}
+
+
 int main(int argc, const char **argv)
 {    
     std::string osm_data_file = "";
@@ -40,7 +68,7 @@ int main(int argc, const char **argv)
                 osm_data_file = argv[i];
     }
     else {
-        std::cout << "To specify a map file use the following format: " << std::endl;
+        std::cout << "\n" << "To specify a map file use the following format: " << std::endl;
         std::cout << "Usage: [executable] [-f filename.osm]" << std::endl;
         // osm_data_file = "../map.osm";
         // user defined open street map
@@ -63,22 +91,23 @@ int main(int argc, const char **argv)
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
 
-    // user input
-    std:float start_x,start_y,end_x,end_y;
-    std::cout << "define start_x \n";
-    std::cin >> start_x;
-    std::cout << "define start_y \n";
-    std::cin >> start_y;
-    std::cout << "define end_x \n";
-    std::cin >> end_x;
-    std::cout << "define end_y \n";
-    std::cin >> end_y;
-
     // // testing without user input
     // float start_x=10.0;
     // float start_y=10.0;
     // float end_x=90.0;
     // float end_y=90.0;
+
+    // user input prompt
+    std::cout << "\nEnter {x,y} values of path start and end. \n";
+    std::cout << "Values are given between 0 and 100 [%] of the OpenStreetMap \n";
+    std::cout << "{0,0} is {bottom,left} and {100,100} is {top,right} \n\n";
+
+    // user input get 
+    float start_x,start_y,end_x,end_y;
+    start_x = getUserInput("start_x");
+    start_y = getUserInput("start_y");
+    end_x = getUserInput("end_x");
+    end_y = getUserInput("end_y");
 
     // Build Model.
     RouteModel model{osm_data};

@@ -3,8 +3,8 @@
 #include <iostream>
 using std::cout;
 
-// class constructor 
-RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model) {
+// class constructor with : initializer_list
+RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y) : m_Model(model) {
     // Convert inputs to percentage:
     start_x *= 0.01;
     start_y *= 0.01;
@@ -17,8 +17,8 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
     // RouteModel::Node *start_node;
     // In ROUTE_PLANNER_H the RouteModel::Node attributes *start_node and *end_node are defined as *pointer
     // that's why we need to store output &address 
-    start_node = &m_Model.FindClosestNode(start_x,start_y);
-    end_node = &m_Model.FindClosestNode(end_x,end_y);
+    start_node = &(m_Model.FindClosestNode(start_x,start_y)); //  parentheses for better readability
+    end_node = &(m_Model.FindClosestNode(end_x,end_y));
 }
 
 
@@ -72,7 +72,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
         RouteModel::Node *new_neighbor = this->FindNeighbor(parent_model->Ways()[road->way].nodes);
         // add new neighbor to back of vector neighbors 
         if (new_neighbor) {
-            this->neighbors.emplace_back(new_neighbor);}
+            this->neighbors.emplace_back(new_neighbor);} // use emplace_back() instead of push_back() avoids unnecessary copying
     }}
     */
 
@@ -84,7 +84,8 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
     for (RouteModel::Node *neighbor_node : current_node->neighbors) {
 
         // only add neighbor_node if not yet visited = !visited
-        if(!neighbor_node->visited){
+        // if(!neighbor_node->visited){ 
+        // this check is redundant, FindNeighbor within FindNeighbors only generates nodes that are not yet visited 
 
             // ROUTE_MODEL_H --- Node* parent = nullptr;
             // every node has a *parent, initialized as nullptr
@@ -104,7 +105,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
             // set the node's visited attribute to true
             neighbor_node->visited = true;
 
-        }
+        // }
     }
 }
 
